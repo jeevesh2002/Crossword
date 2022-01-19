@@ -49,12 +49,10 @@ class Crossword():
             for i in range(self.height):
                 row = []
                 for j in range(self.width):
-                    if j >= len(contents[i]):
+                    if j >= len(contents[i]) or contents[i][j] != "_":
                         row.append(False)
-                    elif contents[i][j] == "_":
-                        row.append(True)
                     else:
-                        row.append(False)
+                        row.append(True)
                 self.structure.append(row)
 
         # Save vocabulary list
@@ -108,7 +106,7 @@ class Crossword():
         # For any pair of variables v1, v2, their overlap is either:
         #    None, if the two variables do not overlap; or
         #    (i, j), where v1's ith character overlaps v2's jth character
-        self.overlaps = dict()
+        self.overlaps = {}
         for v1 in self.variables:
             for v2 in self.variables:
                 if v1 == v2:
@@ -127,7 +125,5 @@ class Crossword():
 
     def neighbors(self, var):
         """Given a variable, return set of overlapping variables."""
-        return set(
-            v for v in self.variables
-            if v != var and self.overlaps[v, var]
-        )
+        return {v for v in self.variables
+                if v != var and self.overlaps[v, var]}

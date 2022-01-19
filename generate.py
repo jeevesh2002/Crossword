@@ -122,11 +122,11 @@ class CrosswordCreator():
             a, b = overlap
         # a and b are positions of overlap, wrt vars x and y
         for word1 in self.domains[x]:
-            overlap_possible = False
-            for word2 in self.domains[y]:
-                if word1 != word2 and word1[a] == word2[b]:
-                    overlap_possible = True
-                    break
+            overlap_possible = any(
+                word1 != word2 and word1[a] == word2[b]
+                for word2 in self.domains[y]
+            )
+
             if not overlap_possible:
                 words_to_remove.append(word1)
 

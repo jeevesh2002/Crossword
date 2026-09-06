@@ -1,0 +1,16 @@
+title = "CodeGuard local PR secret checks"
+
+[extend]
+useDefault = true
+
+# Only vendored CodeGuard guidance is excluded. Application files, general
+# documentation, fixtures, and other agent guidance remain subject to scanning.
+[allowlist]
+description = "Vendored CodeGuard documentation contains intentionally unsafe examples"
+paths = [
+  '''^\.agents/skills/codeguard/(SKILL\.md|rules/codeguard-[^/]+\.md)$''',
+  '''^\.agents/rules/codeguard-[^/]+\.md$''',
+  '''^\.github/instructions/codeguard-[^/]+\.instructions\.md$''',
+  '''^\.github/agents/codeguard-reviewer\.agent\.md$''',
+  '''^\.codex/agents/codeguard-reviewer\.toml$''',
+]

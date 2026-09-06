@@ -1,0 +1,67 @@
+# Locally authored, focused checks informed by Project CodeGuard 1.4.0.
+# No registry rules, remote validators, autofixes, or paid Semgrep engine.
+rules:
+  - id: codeguard-python-eval
+    languages: [python]
+    message: Avoid evaluating Python expressions from data; use a parser such as ast.literal_eval for literals.
+    severity: ERROR
+    pattern: eval(...)
+    metadata:
+      cwe: CWE-95
+      codeguard: codeguard-0-input-validation-injection
+
+  - id: codeguard-javascript-eval
+    languages: [javascript, typescript]
+    message: Avoid dynamic JavaScript evaluation; parse data without interpreting it as code.
+    severity: ERROR
+    pattern: eval(...)
+    metadata:
+      cwe: CWE-95
+      codeguard: codeguard-0-input-validation-injection
+
+  - id: codeguard-python-tls-verification-disabled
+    languages: [python]
+    message: Keep TLS certificate verification enabled and configure a trusted CA when needed.
+    severity: ERROR
+    pattern-either:
+      - pattern: requests.$METHOD(..., verify=False, ...)
+      - pattern: ssl._create_unverified_context(...)
+    metadata:
+      cwe: CWE-295
+      codeguard: codeguard-1-digital-certificates
+
+  - id: codeguard-javascript-tls-verification-disabled
+    languages: [javascript, typescript]
+    message: Keep TLS certificate verification enabled; do not disable it in the environment or client options.
+    severity: ERROR
+    pattern-either:
+      - pattern: process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+      - pattern: "{..., rejectUnauthorized: false, ...}"
+    metadata:
+      cwe: CWE-295
+      codeguard: codeguard-1-digital-certificates
+
+  - id: codeguard-python-unsafe-yaml
+    languages: [python]
+    message: Use yaml.safe_load for untrusted YAML instead of loaders that construct Python objects.
+    severity: ERROR
+    pattern-either:
+      - pattern: yaml.unsafe_load(...)
+      - pattern: yaml.load(..., Loader=yaml.Loader, ...)
+      - pattern: yaml.load(..., Loader=yaml.UnsafeLoader, ...)
+    metadata:
+      cwe: CWE-502
+      codeguard: codeguard-0-xml-and-serialization
+
+  - id: codeguard-java-insecure-cipher
+    languages: [java]
+    message: Replace DES, RC4, and ECB encryption with a vetted authenticated encryption mode.
+    severity: ERROR
+    patterns:
+      - pattern: javax.crypto.Cipher.getInstance($TRANSFORMATION, ...)
+      - metavariable-regex:
+          metavariable: $TRANSFORMATION
+          regex: '^"(?:DES(?:ede)?(?:/.*)?|RC4|AES/ECB/.*)"$'
+    metadata:
+      cwe: CWE-327
+      codeguard: codeguard-1-crypto-algorithms

@@ -1,0 +1,35 @@
+{
+  "actions/checkout": {
+    "tag": "v7.0.1",
+    "commit": "3d3c42e5aac5ba805825da76410c181273ba90b1",
+    "source": "https://api.github.com/repos/actions/checkout/git/refs/tags/v7.0.1"
+  },
+  "actions/setup-python": {
+    "tag": "v7.0.0",
+    "commit": "5fda3b95a4ea91299a34e894583c3862153e4b97",
+    "source": "https://api.github.com/repos/actions/setup-python/git/refs/tags/v7.0.0"
+  },
+  "gitleaks": {
+    "version": "8.30.1",
+    "archive": "https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz",
+    "sha256": "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb"
+  },
+  "semgrep": {
+    "version": "1.176.1",
+    "source": "https://pypi.org/pypi/semgrep/1.176.1/json",
+    "transitive_dependency_lock": "not supplied; pip resolves dependencies from PyPI"
+  },
+  "codeguard_guidance": {
+    "version": "1.4.0",
+    "commit": "7e19e207bd67abbd3d04ae664441595410df1157",
+    "source": "https://github.com/cosai-oasis/project-codeguard",
+    "note": "Six locally authored Semgrep rules; official converted guidance is separately vendored."
+  },
+  "validation": {
+    "actionlint": "1.7.12",
+    "semgrep": "1.176.1",
+    "gitleaks": "8.30.1",
+    "runner_observed": "local Linux ARM64; workflow targets Ubuntu x64",
+    "observed_at": "2026-09-06T06:30:38.030690+00:00"
+  }
+}
